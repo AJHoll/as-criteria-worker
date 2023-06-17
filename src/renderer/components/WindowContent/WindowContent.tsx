@@ -5,6 +5,8 @@ import RootStore from '../../stores/RootStore';
 import OMainPage from '../MainPage/MainPage';
 import './WindowContent.scss';
 import DevsToast from '../../../devs-ui-kit/DevsToast/DevsToast';
+import OManageCriteria from '../app/ManageCriteria/ManageCriteria';
+import OManageRate from '../app/ManageRate/ManageRate';
 
 export interface WindowContentProps extends StoreProps {
 }
@@ -20,6 +22,12 @@ export class WindowContent extends React.Component<WindowContentProps, any> {
     switch ((this.props.rootStore as RootStore).activeComponentName) {
       case 'mainPage': {
         return <OMainPage rootStore={this.props.rootStore} />;
+      }
+      case 'manageCriteria': {
+        return <OManageCriteria rootStore={this.props.rootStore} />;
+      }
+      case 'manageRate': {
+        return <OManageRate rootStore={this.props.rootStore} />;
       }
       default: {
         return <OMainPage rootStore={this.props.rootStore} />;

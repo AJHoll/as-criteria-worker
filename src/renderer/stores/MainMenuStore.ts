@@ -64,6 +64,19 @@ export default class MainMenuStore implements Store {
   };
 
   async reloadData() {
-    this.menu = [];
+    this.menu = [
+      {
+        id: 'manageCriteria',
+        componentName: 'manageCriteria',
+        title: 'Управление критериями',
+        icon: 'lni lni-layers',
+      },
+      {
+        id: 'manageRate',
+        componentName: 'manageRate',
+        title: 'Заведение оценок',
+        icon: 'lni lni-graph',
+      },
+    ];
   }
 }

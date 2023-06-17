@@ -1,0 +1,22 @@
+.app_skill_item {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+
+  &__key {
+    flex: 0.5;
+  }
+
+  &__caption {
+    flex: auto;
+  }
+
+  &__mark {
+    flex: 1;
+  }
+
+  &__delete {
+    flex: none;
+    align-self: end;
+  }
+}

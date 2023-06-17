@@ -8,6 +8,8 @@ import DevsToast from '../../devs-ui-kit/DevsToast/DevsToast';
 import React from 'react';
 // eslint-disable-next-line import/no-cycle
 import MainMenuStore from './MainMenuStore';
+// eslint-disable-next-line import/no-cycle
+import ManageCriteriaStore from './ManageCriteriaStore';
 
 export default class RootStore implements Store {
   private readonly _id: string;
@@ -36,6 +38,8 @@ export default class RootStore implements Store {
 
   readonly mainMenuStore: MainMenuStore;
 
+  readonly manageCriteriaStore: ManageCriteriaStore;
+
   private _toastRef: React.RefObject<DevsToast> | null;
 
   get toastRef(): React.RefObject<DevsToast> | null {
@@ -46,6 +50,8 @@ export default class RootStore implements Store {
     this._toastRef = value;
   }
 
+  readonly serializeTimerId;
+
   constructor() {
     this._id = 'rootStore';
     this._rootStore = this;
@@ -53,8 +59,21 @@ export default class RootStore implements Store {
     // others stores
     this.windowTabBarStore = new WindowTabBarStore(this);
     this.mainMenuStore = new MainMenuStore(this);
+    this.manageCriteriaStore = new ManageCriteriaStore(this);
     this._toastRef = null;
     // make all autoobservable
     makeAutoObservable(this);
+    this.serializeTimerId = setInterval(() => {
+      this.serializeData();
+    }, 1000);
+  }
+
+  serializeData() {
+    window.localStorage.setItem(
+      'data',
+      JSON.stringify({
+        skills: this.manageCriteriaStore.skills,
+      }),
+    );
   }
 }
