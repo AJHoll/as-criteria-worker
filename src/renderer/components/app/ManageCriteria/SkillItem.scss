@@ -1,7 +1,13 @@
 .app_skill_item {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   width: 100%;
+
+  &__title {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+  }
 
   &__key {
     flex: 0.5;
@@ -15,7 +21,7 @@
     flex: 1;
   }
 
-  &__delete {
+  &__delete, &__create {
     flex: none;
     align-self: end;
   }
