@@ -61,19 +61,28 @@ export default class RootStore implements Store {
     this.mainMenuStore = new MainMenuStore(this);
     this.manageCriteriaStore = new ManageCriteriaStore(this);
     this._toastRef = null;
-    // make all autoobservable
-    makeAutoObservable(this);
+
+    this.deserializeData();
     this.serializeTimerId = setInterval(() => {
       this.serializeData();
     }, 1000);
+    // make all autoobservable
+    makeAutoObservable(this);
   }
 
   serializeData() {
     window.localStorage.setItem(
       'data',
       JSON.stringify({
-        skills: this.manageCriteriaStore.skills,
+        criterias: this.manageCriteriaStore.skills,
       }),
     );
+  }
+
+  deserializeData() {
+    const data = window.localStorage.getItem('data');
+    if (data !== null) {
+      this.manageCriteriaStore.skills = JSON.parse(data).criterias;
+    }
   }
 }

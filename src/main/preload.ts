@@ -18,6 +18,7 @@ contextBridge.exposeInMainWorld('api', {
       return win.isMaximized();
     },
     close() {
+      BrowserWindow.getFocusedWindow()?.close();
     },
     isMaximized() {
       return !!BrowserWindow.getFocusedWindow()?.isMaximized();
