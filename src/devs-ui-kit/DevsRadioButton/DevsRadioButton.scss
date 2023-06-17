@@ -1,0 +1,77 @@
+@import "../DevsUIKit";
+
+.devs_radiobutton {
+  $color-radiobutton: $color-secondary;
+  $color-hovered-radiobutton: $color-primary;
+  $opacity-disabled: 0.6;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 31px;
+  margin-right: 4px;
+  margin-left: 4px;
+  gap: 5px;
+
+  &__label {
+    color: $color-radiobutton;
+    padding-left: 8px;
+    padding-right: 8px;
+    font-size: 15px;
+    transition: 200ms;
+  }
+
+  &__item {
+    appearance: none;
+    background-color: #fff;
+    margin: 0;
+    color: $color-radiobutton;
+    width: 23px;
+    height: 23px;
+    border: 1px solid $color-radiobutton;
+    border-radius: 50%;
+    place-content: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 200ms;
+
+    &:checked {
+      border: 5px solid $color-radiobutton;
+      transition: 200ms;
+    }
+  }
+
+  &:hover {
+    .devs_radiobutton__label {
+      color: $color-hovered-radiobutton;
+    }
+
+    .devs_radiobutton__item {
+      border-color: $color-hovered-radiobutton;
+      cursor: pointer;
+    }
+  }
+
+  &__invalid {
+    .devs_radiobutton__label {
+      color: $color-danger !important;
+    }
+
+    .devs_radiobutton__item {
+      border-color: $color-danger !important;
+    }
+  }
+
+  &__disabled {
+    pointer-events: none;
+
+    .devs_radiobutton__label {
+      opacity: $opacity-disabled;
+    }
+
+    .devs_radiobutton__item {
+      opacity: $opacity-disabled;
+    }
+  }
+}

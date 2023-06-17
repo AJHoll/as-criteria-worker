@@ -1,0 +1,58 @@
+@import "../DevsUIKit";
+
+.devs_textarea {
+  $textarea-color: $color-secondary;
+  $textarea-hover-color: $color-primary;
+  $opacity-disabled: 0.6;
+  display: flex;
+  border: solid $textarea-color 1px;
+  border-radius: 3px;
+  color: $textarea-color;
+  font-size: 15px;
+  padding: 5px;
+  resize: none;
+  transition: 200ms;
+
+  &::placeholder {
+    color: $textarea-color;
+  }
+
+  &:hover, &.devs_focused {
+    border: solid 1px $textarea-hover-color;
+    color: $textarea-hover-color;
+
+    &.devs_textarea {
+      color: $textarea-hover-color;
+
+      &::placeholder {
+        color: $textarea-hover-color;
+      }
+    }
+  }
+
+  &.devs_focused {
+    box-shadow: 0 3px 5px 1px transparentize($textarea-hover-color, 0.75);
+  }
+
+  &__invalid {
+    border-color: $color-danger !important;
+    color: $color-danger !important;
+
+    &.devs_textarea {
+      color: $color-danger !important;
+
+      &::placeholder {
+        color: $color-danger !important;
+      }
+    }
+
+    &.devs_focused {
+      box-shadow: 0 3px 5px 1px transparentize($color-danger, 0.75);
+    }
+  }
+
+  &__disabled {
+    pointer-events: none;
+    opacity: $opacity-disabled;
+  }
+}

@@ -1,0 +1,80 @@
+@import "../DevsUIKit";
+
+.devs_checkbox {
+  $color-checkbox: $color-secondary;
+  $color-hovered-checkbox: $color-primary;
+  $opacity-disabled: 0.6;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 31px;
+  margin-right: 4px;
+  margin-left: 4px;
+
+  &__label {
+    color: $color-checkbox;
+    padding-left: 8px;
+    padding-right: 8px;
+    transition: 200ms;
+    font-size: 15px;
+  }
+
+  &:hover {
+    .devs_checkbox__label {
+      color: $color-hovered-checkbox;
+    }
+
+    .p-checkbox {
+      &-box {
+        border-color: $color-hovered-checkbox;
+      }
+
+      &-checked {
+        .p-checkbox-box {
+          width: 100%;
+          color: $color-white;
+          background-color: $color-hovered-checkbox;
+        }
+      }
+    }
+  }
+
+  .p-checkbox-disabled {
+    .p-checkbox-box {
+      opacity: $opacity-disabled;
+    }
+
+    &.p-checkbox-checked {
+      .p-checkbox-box {
+        opacity: $opacity-disabled;
+      }
+    }
+  }
+
+  &__invalid {
+    .devs_checkbox__label {
+      color: $color-danger !important;
+    }
+
+    .p-checkbox {
+      &-box {
+        border-color: $color-danger !important;
+      }
+
+      &-checked {
+        .p-checkbox-box {
+          background-color: $color-danger !important;
+        }
+      }
+    }
+  }
+
+  &__disabled {
+    pointer-events: none;
+
+    .devs_checkbox__label {
+      opacity: $opacity-disabled;
+    }
+  }
+}

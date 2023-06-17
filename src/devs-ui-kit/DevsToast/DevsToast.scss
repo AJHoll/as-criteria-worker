@@ -1,0 +1,30 @@
+@import "../DevsUIKit";
+
+.devs_toast {
+  &.p-toast-top-right {
+    top: 52px;
+  }
+
+  .p-toast-message {
+    &-content {
+      .p-toast-message-icon {
+        align-self: center;
+      }
+
+      .p-toast-icon-close {
+      }
+    }
+
+    &-info {
+    }
+
+    &-success {
+    }
+
+    &-warn {
+    }
+
+    &-error {
+    }
+  }
+}

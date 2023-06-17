@@ -1,0 +1,25 @@
+@import "../DevsUIKit";
+
+.devs_form_item {
+  display: flex;
+  flex: none;
+  align-items: center;
+  width: 100%;
+  gap: 15px;
+
+  &__label {
+    flex: none;
+    width: fit-content;
+    color: $color-secondary;
+  }
+
+  &__input {
+    flex: auto;
+    width: 100%;
+    display: flex;
+
+    & > * {
+      flex: auto;
+    }
+  }
+}

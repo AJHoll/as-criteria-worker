@@ -1,0 +1,38 @@
+@import "../DevsUIKit";
+
+.devs_button {
+  &.p-button {
+    height: 31px;
+    font-size: 15px;
+  }
+
+  &.p-button-raised {
+    &.p-button {
+      box-shadow: 0 3px 5px 1px transparentize($color-secondary, 0.75);
+
+      &-secondary, &-secondary:focus {
+        box-shadow: 0 3px 5px 1px transparentize($color-primary, 0.75);
+      }
+
+      &-success, &-success:focus {
+        box-shadow: 0 3px 5px 1px transparentize($color-success, 0.75);
+      }
+
+      &-info, &-info:focus {
+        box-shadow: 0 3px 5px 1px transparentize($color-info, 0.75);
+      }
+
+      &-warning, &-warning:focus {
+        box-shadow: 0 3px 5px 1px transparentize($color-warning, 0.75);
+      }
+
+      &-help, &-help:focus {
+        box-shadow: 0 3px 5px 1px transparentize($color-help, 0.75);
+      }
+
+      &-danger, &-danger:focus {
+        box-shadow: 0 3px 5px 1px transparentize($color-danger, 0.75);
+      }
+    }
+  }
+}

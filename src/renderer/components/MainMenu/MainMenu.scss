@@ -1,0 +1,45 @@
+.app_main_menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  &__search {
+    display: flex;
+    flex-direction: row;
+    flex: none;
+    padding-bottom: 50px;
+    width: 70%;
+  }
+
+  &__icon {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
+    padding-top: 50px;
+    padding-bottom: 50px;
+
+    img {
+      width: 100px;
+    }
+
+    &-text {
+      span {
+        font-size: 35px;
+      }
+
+      p {
+        font-size: 13px;
+        text-align: right;
+      }
+    }
+  }
+
+  &__content {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+  }
+}

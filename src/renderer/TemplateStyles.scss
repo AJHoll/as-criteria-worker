@@ -1,0 +1,23 @@
+%flex {
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+
+%flex-row {
+  @extend %flex;
+  flex-direction: row;
+}
+
+%flex-column {
+  @extend %flex;
+  flex-direction: column;
+}
+
+%draggable {
+  -webkit-app-region: drag;
+}
+
+%undraggable {
+  -webkit-app-region: no-drag;
+}

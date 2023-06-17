@@ -1,0 +1,10 @@
+{
+  "databases": [
+    {
+      "name": "Подбор персонала",
+      "host": "localhost",
+      "port": 5432,
+      "database": "as23_super_hr"
+    }
+  ]
+}

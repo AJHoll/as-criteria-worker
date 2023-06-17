@@ -1,0 +1,75 @@
+module.exports = {
+  extends: [
+    'airbnb',
+    'airbnb/hooks',
+    // "plugin:@typescript-eslint/recommended",
+    'plugin:jest/recommended',
+    'plugin:promise/recommended',
+    'plugin:compat/recommended',
+  ],
+  env: {
+    browser: true,
+    node: true,
+  },
+  rules: {
+    '@typescript-eslint/explicit-function-return-type': 'off',
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
+    '@typescript-eslint/no-var-requires': 'off',
+    'no-param-reassign': ['error', { props: false }],
+    // A temporary hack related to IDE not resolving correct package.json
+    'import/no-extraneous-dependencies': 'off',
+    'import/no-unresolved': 'error',
+    // Since React 17 and typescript 4.1 you can safely disable the rule
+    'react/react-in-jsx-scope': 'off',
+    'no-unused-vars': 'off',
+    'no-underscore-dangle': 'off',
+    'import/extensions': 'off',
+    'react/jsx-filename-extension': [
+      1,
+      { extensions: ['.js', '.jsx', '.tsx'] },
+    ],
+    'react/jsx-first-prop-new-line': 'off',
+    'react/jsx-indent-props': 'off',
+    'import/no-import-module-exports': 'off',
+    'object-curly-newline': 'off',
+    'react/prefer-stateless-function': 'off',
+    'react/require-default-props': 'off',
+    'no-use-before-define': 'off',
+    'react/no-unused-prop-types': 'warn',
+    'react/jsx-props-no-spreading': 'off',
+    'import/order': 'off',
+    'max-len': 'off',
+    'jsx-a11y/click-events-have-key-events': 'off',
+    'jsx-a11y/no-static-element-interactions': 'off',
+    'react/destructuring-assignment': 'off',
+    'jsx-a11y/no-noninteractive-element-interactions': 'off',
+    'jsx-a11y/no-noninteractive-tabindex': 'off',
+    'jsx-a11y/label-has-associated-control': 'off',
+    'no-shadow': 'off',
+    '@typescript-eslint/no-shadow': 'off',
+    'no-plusplus': 'off',
+    'no-restricted-syntax': 'off',
+    'no-await-in-loop': 'off',
+  },
+  parser: '@typescript-eslint/parser',
+  parserOptions: {
+    ecmaVersion: 2020,
+    sourceType: 'module',
+    project: './tsconfig.json',
+    tsconfigRootDir: __dirname,
+    createDefaultProgram: true,
+  },
+  settings: {
+    'import/resolver': {
+      // See https://github.com/benmosher/eslint-plugin-import/issues/1396#issuecomment-575727774 for line below
+      node: {},
+      webpack: {
+        config: require.resolve('./.erb/configs/webpack.config.eslint.ts'),
+      },
+      typescript: {},
+    },
+    'import/parsers': {
+      '@typescript-eslint/parser': ['.ts', '.tsx'],
+    },
+  },
+};

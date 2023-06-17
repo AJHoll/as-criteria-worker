@@ -1,0 +1,22 @@
+@import "../DevsUIKit";
+
+.devs_panel {
+  $panel-color: transparentize($color-secondary, 0.5);
+  $panel-hover-color: transparentize($color-primary, 0.5);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 200px;
+  min-height: 50px;
+  width: fit-content;
+  height: fit-content;
+  border-radius: 3px;
+  padding: 10px;
+  background-color: $color-white;
+  border: solid 1px $panel-color;
+  transition: 200ms;
+
+  &:hover {
+    border-color: $panel-hover-color;
+  }
+}

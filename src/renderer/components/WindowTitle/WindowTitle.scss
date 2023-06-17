@@ -1,0 +1,74 @@
+@import '../../TemplateStyles.scss';
+
+.window__title {
+  &-tab-bar {
+    @extend %flex-row, %draggable;
+    width: auto;
+    flex: auto;
+    margin-right: 5px;
+    align-items: center;
+    font-size: 13.5px;
+    overflow: hidden;
+  }
+}
+
+%window-control-area {
+  @extend %undraggable;
+  width: 46px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 10px;
+}
+
+.window__controls {
+  display: flex;
+  flex: none;
+
+  .window__control {
+    align-items: center;
+    font-family: 'SegoeGlyph', sans-serif;
+
+    &:hover {
+      background-color: hsla(0, 0%, 0%, 0.1);
+    }
+
+    &-minimize {
+      @extend %window-control-area;
+
+      &::before {
+        content: '\e921'; // свернуть
+      }
+    }
+
+    &-maximize {
+      @extend %window-control-area;
+
+      &::before {
+        content: '\e922'; // развернуть
+      }
+    }
+
+    &-unmaximize {
+      @extend %window-control-area;
+
+      &::before {
+        content: '\e923'; // восстановить
+      }
+    }
+
+    &-close {
+      @extend %window-control-area;
+
+      &::before {
+        content: '\e8bb'; // закрыть
+      }
+
+      &:hover {
+        background-color: rgba(232, 17, 35, 0.9);
+        color: rgb(255, 255, 255);
+      }
+    }
+  }
+}

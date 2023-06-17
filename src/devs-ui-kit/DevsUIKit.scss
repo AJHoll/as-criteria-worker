@@ -1,0 +1,41 @@
+@import "Icons";
+@import 'primereact/resources/primereact.min.css';
+
+// Цвета
+$color-primary: #467CB1;
+$color-secondary: #869AAE;
+$color-success: #68AB50;
+$color-info: #52A2B4;
+$color-warning: #DA8A40;
+$color-help: #5E50AF;
+$color-danger: #C52B2B;
+$color-black: #000000;
+$color-white: #ffffff;
+$color-grey: #afafaf;
+
+$color-disabled-control: #cccccc;
+
+$raised-shadow-color: $color-black;
+
+.devs_raised {
+  box-shadow: 0 3px 5px 1px transparentize($raised-shadow-color, 0.75);
+}
+
+.devs_rotating {
+  animation-name: spin;
+  animation-duration: 1000ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+}
+
+.devs_focused {
+  box-shadow: 0 3px 5px 1px transparentize($raised-shadow-color, 0.75);
+}

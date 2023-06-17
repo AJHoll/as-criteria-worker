@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta
+            http-equiv="Content-Security-Policy"
+            content="script-src 'self' 'unsafe-inline'"
+    />
+    <title>critIn</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      #loading-spinner {
+        height: 100vh;
+        width: 100vw;
+        position: absolute;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      @keyframes spinner {
+        from {
+          transform: rotate(0deg);
+        }
+
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      #loading-spinner .spinner {
+        height: 50px;
+        width: 50px;
+        border-left: 3px solid #467CB1;
+        border-bottom: 3px solid #467CB1;
+        border-right: 3px solid #467CB1;
+        border-top: 3px solid transparent;
+        border-radius: 50%;
+        animation: spinner 2s linear infinite;
+      }
+    </style>
+</head>
+<body>
+<div id="loading-spinner">
+    <div class="spinner"></div>
+</div>
+<div id="root"></div>
+</body>
+</html>

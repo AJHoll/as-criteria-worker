@@ -1,0 +1,32 @@
+@use "~ag-grid-community/styles" as ag;
+@import "../../../devs-ui-kit/DevsUIKit";
+
+$field-transparent-coeff: 0.9;
+@include ag.grid-styles((
+  theme: devs,
+  extend-theme: balham,
+  balham-active-color: $color-secondary,
+  foreground-color: $color-secondary,
+  background-color: $color-white,
+  odd-row-background-color: transparentize($color-secondary, 0.95),
+  secondary-foreground-color: $color-secondary,
+  data-color:scale-color($color-secondary, $lightness: -10%),
+  header-foreground-color: scale-color($color-secondary, $lightness: -10%),
+  header-background-color: transparentize($color-secondary, $field-transparent-coeff),
+  disabled-foreground-color: transparentize($color-secondary, 0.6),
+  selected-row-background-color: transparentize($color-primary, 0.85),
+  row-hover-color: transparentize($color-primary, 0.95),
+  border-color: transparentize($color-secondary, 0.4),
+  border-radius: 3px,
+  font-family: 'NotoSansHK' sans-serif,
+  font-size: 15px,
+  grid-size: 5px,
+));
+.ag-theme-devs {
+  .ag-header {
+    font-size: 13px;
+  }
+  .ag-root-wrapper{
+    border-radius: 3px;
+  }
+}

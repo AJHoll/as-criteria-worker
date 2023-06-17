@@ -1,0 +1,11 @@
+@import '../../TemplateStyles.scss';
+@import '../../layouts/WindowLayout/WindowLayout.scss';
+
+.window_tab-bar {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  height: 100%;
+  justify-content: left;
+}

@@ -1,0 +1,26 @@
+@font-face {
+  font-family: 'NotoSansHK';
+  src: local('NotoSansHK'),
+    url('../../assets/fonts/NotoSansHK/NotoSansHK-Light.otf')
+      format('opentype');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'SegoeGlyph';
+  src: local('SegoeGlyph'),
+    url('../../assets/fonts/SegoeUI/SegMDL2.ttf') format('truetype');
+  font-weight: 100;
+}
+
+$lni-font-path: "../../assets/fonts/lineicons" !default;
+
+@font-face {
+  font-family: 'lineicons';
+  src: url('#{$lni-font-path}/lineicons.eot');
+  src: url('#{$lni-font-path}/lineicons.eot') format('embedded-opentype'),
+  url('#{$lni-font-path}/lineicons.woff2') format('woff2'),
+  url('#{$lni-font-path}/lineicons.woff') format('woff'),
+  url('#{$lni-font-path}/lineicons.ttf') format('truetype'),
+  url('#{$lni-font-path}/lineicons.svg') format('svg');
+}
