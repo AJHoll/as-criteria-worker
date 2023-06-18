@@ -4,7 +4,6 @@ import { StoreProps } from '../../../../../interfaces/StoreProps';
 import { observer } from 'mobx-react';
 import { AspectItemData } from '../../../../stores/ManageCriteriaStore';
 import DevsButton from '../../../../../devs-ui-kit/DevsButton/DevsButton';
-import DevsPanel from '../../../../../devs-ui-kit/DevsPanel/DevsPanel';
 import DevsInput from '../../../../../devs-ui-kit/DevsInput/DevsInput';
 
 interface DescretteAspectExtraProps extends StoreProps {
@@ -26,7 +25,7 @@ export class DescretteAspectExtra extends React.Component<DescretteAspectExtraPr
         <div className="app_descrette_aspect_extra__content">
           {
             this.props.aspect.extraAspect?.map((extra) => (
-              <DevsPanel className="app_descrette_aspect_extra_item">
+              <div className="app_descrette_aspect_extra_item">
                 <label className="app_descrette_aspect_extra_item__description">
                   Описание
                   <DevsInput value={extra.description} />
@@ -40,7 +39,7 @@ export class DescretteAspectExtra extends React.Component<DescretteAspectExtraPr
                             className="app_descrette_aspect_extra_item__delete"
                             icon="lni lni-trash-can"
                 />
-              </DevsPanel>
+              </div>
             ))
           }
         </div>
