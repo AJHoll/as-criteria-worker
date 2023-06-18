@@ -47,7 +47,12 @@ export class SubcriteriaItem extends React.Component<SubcriteriaItemProps> {
           </div>
           <div className="app_subcriteria_item__content">
             {
-              subcriteria.aspects.map((aspect) => <OAsperctItem aspect={aspect} rootStore={this.props.rootStore} />)
+              subcriteria.aspects.map((aspect) => (
+                <OAsperctItem key={aspect.id}
+                              aspect={aspect}
+                              rootStore={this.props.rootStore}
+                />
+              ))
             }
           </div>
         </div>

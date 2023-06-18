@@ -3,6 +3,7 @@ import { Store } from '../../interfaces/Store';
 import RootStore from './RootStore';
 import { makeAutoObservable } from 'mobx';
 import { v4 as uuid } from 'uuid';
+import { SelectOption } from '../../devs-ui-kit/DevsSelect/DevsSelect';
 
 export interface SkillItemData {
   id: string;
@@ -131,6 +132,37 @@ export default class ManageCriteriaStore implements Store {
     this._skills = value;
   }
 
+  get aspectOptions(): SelectOption[] {
+    return [
+      {
+        label: 'Бинарный',
+        value: 'B',
+      },
+      {
+        label: 'Дискретный',
+        value: 'D',
+      },
+      {
+        label: 'Судейский',
+        value: 'J',
+      },
+    ];
+  }
+
+  constructor(rootStore: RootStore) {
+    this._id = 'manageCriteriaStore';
+    this._rootStore = rootStore;
+    makeAutoObservable(this);
+  }
+
+  add(): void {
+    this.skills.push({ id: uuid(), key: '', caption: '', mark: '', subcriterias: [] });
+  }
+
+  delete(id: string): void {
+    this.skills = this.skills.filter((skill) => skill.id !== id);
+  }
+
   setSkillKey(id: string, key: SkillItemData['key']) {
     const item = this.skills.find((skill) => skill.id === id);
     if (item !== undefined) {
@@ -151,19 +183,5 @@ export default class ManageCriteriaStore implements Store {
     if (item !== undefined) {
       item.mark = mark;
     }
-  }
-
-  constructor(rootStore: RootStore) {
-    this._id = 'manageCriteriaStore';
-    this._rootStore = rootStore;
-    makeAutoObservable(this);
-  }
-
-  add(): void {
-    this.skills.push({ id: uuid(), key: '', caption: '', mark: '', subcriterias: [] });
-  }
-
-  delete(id: string): void {
-    this.skills = this.skills.filter((skill) => skill.id !== id);
   }
 }
