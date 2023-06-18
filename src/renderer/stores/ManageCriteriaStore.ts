@@ -132,6 +132,7 @@ export default class ManageCriteriaStore implements Store {
     this._skills = value;
   }
 
+  // eslint-disable-next-line class-methods-use-this
   get aspectOptions(): SelectOption[] {
     return [
       {
@@ -149,17 +150,26 @@ export default class ManageCriteriaStore implements Store {
     ];
   }
 
+  // eslint-disable-next-line class-methods-use-this
+  get alphabet(): string {
+    return 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  }
+
   constructor(rootStore: RootStore) {
     this._id = 'manageCriteriaStore';
     this._rootStore = rootStore;
     makeAutoObservable(this);
   }
 
-  add(): void {
-    this.skills.push({ id: uuid(), key: '', caption: '', mark: '', subcriterias: [] });
+  addSkill(): void {
+    let newSkillKey = [...this.skills].sort((a, b) => {
+      return this.alphabet.lastIndexOf(b.key) - this.alphabet.lastIndexOf(a.key);
+    })[0]?.key;
+    newSkillKey = this.alphabet.charAt(this.alphabet.lastIndexOf(newSkillKey) + 1);
+    this.skills.push({ id: uuid(), key: newSkillKey, caption: '', mark: '', subcriterias: [] });
   }
 
-  delete(id: string): void {
+  deleteSkill(id: string): void {
     this.skills = this.skills.filter((skill) => skill.id !== id);
   }
 
@@ -167,7 +177,7 @@ export default class ManageCriteriaStore implements Store {
     const item = this.skills.find((skill) => skill.id === id);
     if (item !== undefined) {
       item.key = key;
-      item.subcriterias = [...item.subcriterias.map(e => ({ ...e }))];
+      item.subcriterias = [...item.subcriterias.map((e) => ({ ...e }))];
     }
   }
 
@@ -182,6 +192,57 @@ export default class ManageCriteriaStore implements Store {
     const item = this.skills.find((skill) => skill.id === id);
     if (item !== undefined) {
       item.mark = mark;
+    }
+  }
+
+  addSubcriteria(skillId: string) {
+    const skill = this.skills.find((skill) => skill.id === skillId);
+    if (skill !== undefined) {
+      const maxOrder = [...skill.subcriterias].sort((a, b) => +(b?.order ?? 0) - +(a?.order ?? 0))[0]?.order;
+      skill.subcriterias.push({
+        id: uuid(),
+        order: (+(maxOrder ?? '0') + 1).toString(),
+        caption: '',
+        aspects: [],
+      });
+    }
+  }
+
+  deleteSubcriteria(skillId: SkillItemData['id'], subcriteriaId: SubcriteriaItemData['id']) {
+    const skill = this.skills.find((skill) => skill.id === skillId);
+    if (skill !== undefined) {
+      skill.subcriterias = skill.subcriterias.filter((subcriteria) => subcriteria.id !== subcriteriaId);
+    }
+  }
+
+  setSubcriteriaOrder(
+    skillId: SkillItemData['id'],
+    subcriteriaId: SubcriteriaItemData['id'],
+    value: SubcriteriaItemData['order'],
+  ) {
+    const skill = this.skills.find((skill) => skill.id === skillId);
+    if (skill !== undefined) {
+      const subcriteria = skill.subcriterias.find((subcriteria) => subcriteria.id === subcriteriaId);
+      if (subcriteria !== undefined) {
+        subcriteria.order = value;
+        if (value !== undefined) {
+          skill.subcriterias.sort((a, b) => +a.order - +b.order);
+        }
+      }
+    }
+  }
+
+  setSubcriteriaCaption(
+    skillId: SkillItemData['id'],
+    subcriteriaId: SubcriteriaItemData['id'],
+    value: SubcriteriaItemData['caption'],
+  ) {
+    const skill = this.skills.find((skill) => skill.id === skillId);
+    if (skill !== undefined) {
+      const subcriteria = skill.subcriterias.find((subcriteria) => subcriteria.id === subcriteriaId);
+      if (subcriteria !== undefined) {
+        subcriteria.caption = value;
+      }
     }
   }
 }

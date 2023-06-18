@@ -6,7 +6,7 @@ import DevsInput from '../../../../devs-ui-kit/DevsInput/DevsInput';
 import ManageCriteriaStore, { SkillItemData, SubcriteriaItemData } from '../../../stores/ManageCriteriaStore';
 import { observer } from 'mobx-react';
 import DevsButton from '../../../../devs-ui-kit/DevsButton/DevsButton';
-import OAsperctItem from './AsperctItem';
+import OAspectItem from './AspectItem';
 
 interface SubcriteriaItemProps extends StoreProps {
   skill: SkillItemData;
@@ -27,11 +27,15 @@ export class SubcriteriaItem extends React.Component<SubcriteriaItemProps> {
           <div className="app_subcriteria_item__title">
             <label className="app_subcriteria_item__title-order">
               № п.п
-              <DevsInput value={subcriteria.order} />
+              <DevsInput value={subcriteria.order}
+                         onChange={(event) => this.manageCriteriaStore.setSubcriteriaOrder(skill.id, subcriteria.id, event.target.value)}
+              />
             </label>
             <label className="app_subcriteria_item__title-caption">
               Название субкритерия
-              <DevsInput value={subcriteria.caption} />
+              <DevsInput value={subcriteria.caption}
+                         onChange={(event) => this.manageCriteriaStore.setSubcriteriaCaption(skill.id, subcriteria.id, event.target.value)}
+              />
             </label>
             <DevsButton template="outlined"
                         color="primary"
@@ -43,14 +47,15 @@ export class SubcriteriaItem extends React.Component<SubcriteriaItemProps> {
                         color="danger"
                         className="app_skill_item__delete"
                         icon="lni lni-trash-can"
+                        onClick={() => this.manageCriteriaStore.deleteSubcriteria(skill.id, subcriteria.id)}
             />
           </div>
           <div className="app_subcriteria_item__content">
             {
               subcriteria.aspects.map((aspect) => (
-                <OAsperctItem key={aspect.id}
-                              aspect={aspect}
-                              rootStore={this.props.rootStore}
+                <OAspectItem key={aspect.id}
+                             aspect={aspect}
+                             rootStore={this.props.rootStore}
                 />
               ))
             }

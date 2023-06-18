@@ -45,12 +45,13 @@ export class SkillItem extends React.Component<SkillItemProps> {
                       className="app_skill_item__create"
                       icon="lni lni-plus"
                       title="Субкритерий"
+                      onClick={() => this.manageCriteriaStore.addSubcriteria(skill.id)}
           />
           <DevsButton template="outlined"
                       color="danger"
                       className="app_skill_item__delete"
                       icon="lni lni-trash-can"
-                      onClick={() => this.manageCriteriaStore.delete(skill.id)}
+                      onClick={() => this.manageCriteriaStore.deleteSkill(skill.id)}
           />
         </div>
         <div className="app_skill_item__content">

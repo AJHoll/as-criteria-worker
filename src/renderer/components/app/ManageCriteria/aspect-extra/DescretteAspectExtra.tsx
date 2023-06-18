@@ -25,7 +25,9 @@ export class DescretteAspectExtra extends React.Component<DescretteAspectExtraPr
         <div className="app_descrette_aspect_extra__content">
           {
             this.props.aspect.extraAspect?.map((extra) => (
-              <div className="app_descrette_aspect_extra_item">
+              <div className="app_descrette_aspect_extra_item"
+                   key={extra.id}
+              >
                 <label className="app_descrette_aspect_extra_item__description">
                   Описание
                   <DevsInput value={extra.description} />

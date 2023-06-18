@@ -22,7 +22,7 @@ export class ManageCriteria extends React.Component<ManageCriteriaProps> {
                         color="primary"
                         title="Добавить критерий"
                         icon="lni lni-plus"
-                        onClick={() => this.manageCriteriaStore.add()}
+                        onClick={() => this.manageCriteriaStore.addSkill()}
             />
           </div>
           <div className="app_skills_container">

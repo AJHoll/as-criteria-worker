@@ -15,8 +15,9 @@ export class JudgeAspectExtra extends React.Component<JudgeAspectExtraProps> {
       <div className="app_judge_aspect_extra">
         {
           this.props.aspect.judgeScore?.map((extra) => (
-            <div className="app_judge_aspect_extra_item">
-
+            <div className="app_judge_aspect_extra_item"
+                 key={extra.id}
+            >
               <label className="app_judge_aspect_extra_item__description">
                 <DevsInput value={extra.description}
                            addonBefore={(

@@ -11,20 +11,30 @@ import DevsTextArea from '../../../../devs-ui-kit/DevsTextArea/DevsTextArea';
 import DevsInput from '../../../../devs-ui-kit/DevsInput/DevsInput';
 import DevsButton from '../../../../devs-ui-kit/DevsButton/DevsButton';
 
-export interface AsperctItemProps extends StoreProps {
+export interface AspectItemProps extends StoreProps {
   aspect: AspectItemData;
 }
 
-export class AsperctItem extends React.Component<AsperctItemProps> {
+export class AspectItem extends React.Component<AspectItemProps> {
   manageCriteriaStore: ManageCriteriaStore = this.props.rootStore.manageCriteriaStore;
 
   get aspectNode(): React.ReactElement | React.ReactElement[] | any {
     switch (this.props.aspect.type) {
       case 'D': {
-        return [<ODescretteAspectItem rootStore={this.props.rootStore} aspect={this.props.aspect} />];
+        return [
+          (<ODescretteAspectItem key={this.props.aspect.id}
+                                 rootStore={this.props.rootStore}
+                                 aspect={this.props.aspect}
+          />),
+        ];
       }
       case 'J': {
-        return [<OJudgeAspectItem rootStore={this.props.rootStore} aspect={this.props.aspect} />];
+        return [
+          (<OJudgeAspectItem key={this.props.aspect.id}
+                             rootStore={this.props.rootStore}
+                             aspect={this.props.aspect}
+          />),
+        ];
       }
       default: {
         return [];
@@ -79,5 +89,5 @@ export class AsperctItem extends React.Component<AsperctItemProps> {
   }
 }
 
-const OAsperctItem = observer(AsperctItem);
-export default OAsperctItem;
+const OAspectItem = observer(AspectItem);
+export default OAspectItem;
