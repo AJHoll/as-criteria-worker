@@ -4,6 +4,7 @@ import RootStore from './RootStore';
 import { makeAutoObservable } from 'mobx';
 import { v4 as uuid } from 'uuid';
 import { SelectOption } from '../../devs-ui-kit/DevsSelect/DevsSelect';
+import controlsUtil from '../utils/ControlsUtil';
 
 export interface SkillItemData {
   id: string;
@@ -407,5 +408,31 @@ export default class ManageCriteriaStore implements Store {
         }
       }
     }
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  async saveToJSON() {
+    await controlsUtil.saveToJSON(JSON.stringify(this.skills), 'criterias-export.json');
+    this.rootStore.toastRef?.current?.success('Сохранение прошло успешно');
+  }
+
+  async loadFromJSON() {
+    const data = await controlsUtil.loadFromJSON();
+    if ((data ?? '').length > 0) {
+      this.skills = JSON.parse(data);
+      this.rootStore.toastRef?.current?.info(
+        'Загрузка прошла успешно',
+        'Пожалуйста, перезагрузите страницу для применения изменений',
+      );
+    }
+  }
+
+  generateMarkList() {
+    this.rootStore.manageRateStore.rates = JSON.parse(JSON.stringify(this.skills));
+    this.skills = [];
+    this.rootStore.toastRef?.current?.success(
+      'Формирование листа завершено',
+      'Пройдите в раздел "Заведения оценок" для дальнейшей работы',
+    );
   }
 }

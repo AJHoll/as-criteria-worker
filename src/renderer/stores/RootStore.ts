@@ -10,6 +10,7 @@ import React from 'react';
 import MainMenuStore from './MainMenuStore';
 // eslint-disable-next-line import/no-cycle
 import ManageCriteriaStore from './ManageCriteriaStore';
+import ManageRateStore from './ManageRateStore';
 
 export default class RootStore implements Store {
   private readonly _id: string;
@@ -39,6 +40,7 @@ export default class RootStore implements Store {
   readonly mainMenuStore: MainMenuStore;
 
   readonly manageCriteriaStore: ManageCriteriaStore;
+  readonly manageRateStore: ManageRateStore;
 
   private _toastRef: React.RefObject<DevsToast> | null;
 
@@ -60,6 +62,7 @@ export default class RootStore implements Store {
     this.windowTabBarStore = new WindowTabBarStore(this);
     this.mainMenuStore = new MainMenuStore(this);
     this.manageCriteriaStore = new ManageCriteriaStore(this);
+    this.manageRateStore = new ManageRateStore(this);
     this._toastRef = null;
 
     this.deserializeData();
@@ -75,6 +78,7 @@ export default class RootStore implements Store {
       'data',
       JSON.stringify({
         criterias: this.manageCriteriaStore.skills,
+        rates: this.manageRateStore.rates,
       }),
     );
   }
@@ -83,6 +87,7 @@ export default class RootStore implements Store {
     const data = window.localStorage.getItem('data');
     if (data !== null) {
       this.manageCriteriaStore.skills = JSON.parse(data).criterias;
+      this.manageRateStore.rates = JSON.parse(data).rates;
     }
   }
 }

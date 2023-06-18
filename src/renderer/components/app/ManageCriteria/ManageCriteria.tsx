@@ -24,6 +24,24 @@ export class ManageCriteria extends React.Component<ManageCriteriaProps> {
                         icon="lni lni-plus"
                         onClick={() => this.manageCriteriaStore.addSkill()}
             />
+            <DevsButton template="filled"
+                        color="secondary"
+                        title="Сохранить в JSON"
+                        icon="lni lni-upload"
+                        onClick={() => this.manageCriteriaStore.saveToJSON()}
+            />
+            <DevsButton template="filled"
+                        color="info"
+                        title="Загрузить из JSON"
+                        icon="lni lni-download"
+                        onClick={() => this.manageCriteriaStore.loadFromJSON()}
+            />
+            <DevsButton template="filled"
+                        color="success"
+                        title="Сформировать лист проверки"
+                        icon="lni lni-check-box"
+                        onClick={() => this.manageCriteriaStore.generateMarkList()}
+            />
           </div>
           <div className="app_skills_container">
             {this.manageCriteriaStore.skills.map((skill) => (

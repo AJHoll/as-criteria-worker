@@ -10,6 +10,8 @@ export interface AppWindow extends Window {
       toggleMaximize: () => void;
       close: () => void;
       isMaximized: () => boolean;
+      saveToJSON: (content: string, fileName: string) => Promise<void>;
+      loadFromJSON: () => Promise<string>;
     }
     ipcRenderer: {
       send: (channel: Channels, args: unknown[]) => void;
