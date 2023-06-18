@@ -27,8 +27,8 @@ export interface AspectItemData {
   description?: string;
   sectionKey?: string;
   maxMark: string;
-  extraAspect?: ExtraAspectItemData[];
-  judgeScore?: JudgeScoreItemData[];
+  extraAspect: ExtraAspectItemData[];
+  judgeScore: JudgeScoreItemData[];
 }
 
 export interface ExtraAspectItemData {
@@ -56,73 +56,7 @@ export default class ManageCriteriaStore implements Store {
     return this._rootStore;
   }
 
-  private _skills: SkillItemData[] = [
-    {
-      id: uuid(),
-      key: 'A',
-      caption: 'Общая структура системы',
-      mark: '10.00',
-      subcriterias: [
-        {
-          id: uuid(),
-          order: '1',
-          caption: 'hello world',
-          aspects: [
-            {
-              id: uuid(),
-              type: 'B',
-              caption: 'После заверешения оформления заявки на складе маршрутной точки отправления появляется материалы  спецификации заявки.',
-              description: '',
-              maxMark: '2',
-            },
-            {
-              id: uuid(),
-              type: 'D',
-              caption: 'Транспортная накладная формируется корректно и содержит все требуемые атриубты',
-              description: 'Минус 0,5 балл за каждый некорректный атрибут',
-              maxMark: '2',
-              extraAspect: [
-                {
-                  id: uuid(),
-                  description: 'Минус что нибудь за ошибку',
-                  mark: '0.5',
-                },
-              ],
-            },
-            {
-              id: uuid(),
-              type: 'J',
-              caption: 'Транспортная накладная формируется корректно и содержит все требуемые атриубты',
-              description: 'Просмотреть что нибудь как нибудь',
-              maxMark: '2',
-              judgeScore: [
-                {
-                  id: uuid(),
-                  description: 'Все очень плохо',
-                  score: '0',
-                },
-                {
-                  id: uuid(),
-                  description: 'Все не очень плохо',
-                  score: '1',
-                },
-                {
-                  id: uuid(),
-                  description: 'Все очень неплохо',
-                  score: '2',
-                },
-                {
-                  id: uuid(),
-                  description: 'Все замечательно',
-                  score: '3',
-                },
-              ],
-            },
-          ],
-        },
-      ],
-    },
-  ];
+  private _skills: SkillItemData[] = [];
 
   get skills(): SkillItemData[] {
     return this._skills;
@@ -162,9 +96,7 @@ export default class ManageCriteriaStore implements Store {
   }
 
   addSkill(): void {
-    let newSkillKey = [...this.skills].sort((a, b) => {
-      return this.alphabet.lastIndexOf(b.key) - this.alphabet.lastIndexOf(a.key);
-    })[0]?.key;
+    let newSkillKey = [...this.skills].sort((a, b) => this.alphabet.lastIndexOf(b.key) - this.alphabet.lastIndexOf(a.key))[0]?.key;
     newSkillKey = this.alphabet.charAt(this.alphabet.lastIndexOf(newSkillKey) + 1);
     this.skills.push({ id: uuid(), key: newSkillKey, caption: '', mark: '', subcriterias: [] });
   }
@@ -242,6 +174,237 @@ export default class ManageCriteriaStore implements Store {
       const subcriteria = skill.subcriterias.find((subcriteria) => subcriteria.id === subcriteriaId);
       if (subcriteria !== undefined) {
         subcriteria.caption = value;
+      }
+    }
+  }
+
+  addAspect(
+    skillId: SkillItemData['id'],
+    subcriteriaId: SubcriteriaItemData['id'],
+  ) {
+    const skill = this.skills.find((skill) => skill.id === skillId);
+    if (skill !== undefined) {
+      const subcriteria = skill.subcriterias.find((subcriteria) => subcriteria.id === subcriteriaId);
+      if (subcriteria !== undefined) {
+        subcriteria.aspects.push({
+          id: uuid(),
+          type: 'B',
+          caption: '',
+          description: '',
+          maxMark: '',
+          extraAspect: [],
+          judgeScore: [],
+        });
+      }
+    }
+  }
+
+  deleteAspect(
+    skillId: SkillItemData['id'],
+    subcriteriaId: SubcriteriaItemData['id'],
+    aspectId: AspectItemData['id'],
+  ) {
+    const skill = this.skills.find((skill) => skill.id === skillId);
+    if (skill !== undefined) {
+      const subcriteria = skill.subcriterias.find((subcriteria) => subcriteria.id === subcriteriaId);
+      if (subcriteria !== undefined) {
+        subcriteria.aspects = subcriteria.aspects.filter((aspect) => aspect.id !== aspectId);
+      }
+    }
+  }
+
+  setAspectType(
+    skillId: SkillItemData['id'],
+    subcriteriaId: SubcriteriaItemData['id'],
+    aspectId: AspectItemData['id'],
+    value: AspectItemData['type'],
+  ) {
+    const skill = this.skills.find((skill) => skill.id === skillId);
+    if (skill !== undefined) {
+      const subcriteria = skill.subcriterias.find((subcriteria) => subcriteria.id === subcriteriaId);
+      if (subcriteria !== undefined) {
+        const aspect = subcriteria.aspects.find((aspect) => aspect.id === aspectId);
+        if (aspect !== undefined) {
+          if (aspect.type !== value) {
+            aspect.type = value;
+            if (aspect.type === 'J') {
+              aspect.judgeScore = [
+                { id: uuid(), description: '', score: '0' },
+                { id: uuid(), description: '', score: '1' },
+                { id: uuid(), description: '', score: '2' },
+                { id: uuid(), description: '', score: '3' },
+              ];
+              aspect.extraAspect = [];
+            }
+            if (aspect.type === 'D') {
+              aspect.extraAspect = [
+                { id: uuid(), description: '', mark: '' },
+              ];
+              aspect.judgeScore = [];
+            }
+            if (aspect.type === 'B') {
+              aspect.extraAspect = [];
+              aspect.judgeScore = [];
+            }
+          }
+        }
+      }
+    }
+  }
+
+  setAspectCaption(
+    skillId: SkillItemData['id'],
+    subcriteriaId: SubcriteriaItemData['id'],
+    aspectId: AspectItemData['id'],
+    value: AspectItemData['caption'],
+  ) {
+    const skill = this.skills.find((skill) => skill.id === skillId);
+    if (skill !== undefined) {
+      const subcriteria = skill.subcriterias.find((subcriteria) => subcriteria.id === subcriteriaId);
+      if (subcriteria !== undefined) {
+        const aspect = subcriteria.aspects.find((aspect) => aspect.id === aspectId);
+        if (aspect !== undefined) {
+          aspect.caption = value;
+        }
+      }
+    }
+  }
+
+  setAspectDescription(
+    skillId: SkillItemData['id'],
+    subcriteriaId: SubcriteriaItemData['id'],
+    aspectId: AspectItemData['id'],
+    value: AspectItemData['description'],
+  ) {
+    const skill = this.skills.find((skill) => skill.id === skillId);
+    if (skill !== undefined) {
+      const subcriteria = skill.subcriterias.find((subcriteria) => subcriteria.id === subcriteriaId);
+      if (subcriteria !== undefined) {
+        const aspect = subcriteria.aspects.find((aspect) => aspect.id === aspectId);
+        if (aspect !== undefined) {
+          aspect.description = value;
+        }
+      }
+    }
+  }
+
+  setAspectMaxMark(
+    skillId: SkillItemData['id'],
+    subcriteriaId: SubcriteriaItemData['id'],
+    aspectId: AspectItemData['id'],
+    value: AspectItemData['maxMark'],
+  ) {
+    const skill = this.skills.find((skill) => skill.id === skillId);
+    if (skill !== undefined) {
+      const subcriteria = skill.subcriterias.find((subcriteria) => subcriteria.id === subcriteriaId);
+      if (subcriteria !== undefined) {
+        const aspect = subcriteria.aspects.find((aspect) => aspect.id === aspectId);
+        if (aspect !== undefined) {
+          aspect.maxMark = value;
+        }
+      }
+    }
+  }
+
+  addDescretteAspectExtra(
+    skillId: SkillItemData['id'],
+    subcriteriaId: SubcriteriaItemData['id'],
+    aspectId: AspectItemData['id'],
+  ) {
+    const skill = this.skills.find((skill) => skill.id === skillId);
+    if (skill !== undefined) {
+      const subcriteria = skill.subcriterias.find((subcriteria) => subcriteria.id === subcriteriaId);
+      if (subcriteria !== undefined) {
+        const aspect = subcriteria.aspects.find((aspect) => aspect.id === aspectId);
+        if (aspect !== undefined) {
+          aspect.extraAspect.push({
+            id: uuid(), description: '', mark: '',
+          });
+        }
+      }
+    }
+  }
+
+  deleteDescretteAspectExtra(
+    skillId: SkillItemData['id'],
+    subcriteriaId: SubcriteriaItemData['id'],
+    aspectId: AspectItemData['id'],
+    descretteAspectExtraId: ExtraAspectItemData['id'],
+  ) {
+    const skill = this.skills.find((skill) => skill.id === skillId);
+    if (skill !== undefined) {
+      const subcriteria = skill.subcriterias.find((subcriteria) => subcriteria.id === subcriteriaId);
+      if (subcriteria !== undefined) {
+        const aspect = subcriteria.aspects.find((aspect) => aspect.id === aspectId);
+        if (aspect !== undefined) {
+          aspect.extraAspect = aspect.extraAspect.filter((extra) => extra.id !== descretteAspectExtraId);
+        }
+      }
+    }
+  }
+
+  setDescretteAspectExtraDescription(
+    skillId: SkillItemData['id'],
+    subcriteriaId: SubcriteriaItemData['id'],
+    aspectId: AspectItemData['id'],
+    descretteAspectExtraId: ExtraAspectItemData['id'],
+    value: ExtraAspectItemData['description'],
+  ) {
+    const skill = this.skills.find((skill) => skill.id === skillId);
+    if (skill !== undefined) {
+      const subcriteria = skill.subcriterias.find((subcriteria) => subcriteria.id === subcriteriaId);
+      if (subcriteria !== undefined) {
+        const aspect = subcriteria.aspects.find((aspect) => aspect.id === aspectId);
+        if (aspect !== undefined) {
+          const extra = aspect.extraAspect.find((extraItem) => extraItem.id === descretteAspectExtraId);
+          if (extra !== undefined) {
+            extra.description = value;
+          }
+        }
+      }
+    }
+  }
+
+  setDescretteAspectExtraMark(
+    skillId: SkillItemData['id'],
+    subcriteriaId: SubcriteriaItemData['id'],
+    aspectId: AspectItemData['id'],
+    descretteAspectExtraId: ExtraAspectItemData['id'],
+    value: ExtraAspectItemData['mark'],
+  ) {
+    const skill = this.skills.find((skill) => skill.id === skillId);
+    if (skill !== undefined) {
+      const subcriteria = skill.subcriterias.find((subcriteria) => subcriteria.id === subcriteriaId);
+      if (subcriteria !== undefined) {
+        const aspect = subcriteria.aspects.find((aspect) => aspect.id === aspectId);
+        if (aspect !== undefined) {
+          const extra = aspect.extraAspect.find((extraItem) => extraItem.id === descretteAspectExtraId);
+          if (extra !== undefined) {
+            extra.mark = value;
+          }
+        }
+      }
+    }
+  }
+
+  setJudgeAspectExtraDescription(
+    skillId: SkillItemData['id'],
+    subcriteriaId: SubcriteriaItemData['id'],
+    aspectId: AspectItemData['id'],
+    judgeAspectExtraId: JudgeScoreItemData['id'],
+    value: JudgeScoreItemData['description'],
+  ) {
+    const skill = this.skills.find((skill) => skill.id === skillId);
+    if (skill !== undefined) {
+      const subcriteria = skill.subcriterias.find((subcriteria) => subcriteria.id === subcriteriaId);
+      if (subcriteria !== undefined) {
+        const aspect = subcriteria.aspects.find((aspect) => aspect.id === aspectId);
+        if (aspect !== undefined) {
+          const extra = aspect.judgeScore.find((extraItem) => extraItem.id === judgeAspectExtraId);
+          if (extra !== undefined) {
+            extra.description = value;
+          }
+        }
       }
     }
   }

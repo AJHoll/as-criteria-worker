@@ -42,6 +42,7 @@ export class SubcriteriaItem extends React.Component<SubcriteriaItemProps> {
                         className="app_skill_item__create"
                         icon="lni lni-plus"
                         title="Аспект"
+                        onClick={() => this.manageCriteriaStore.addAspect(skill.id, subcriteria.id)}
             />
             <DevsButton template="outlined"
                         color="danger"
@@ -54,6 +55,8 @@ export class SubcriteriaItem extends React.Component<SubcriteriaItemProps> {
             {
               subcriteria.aspects.map((aspect) => (
                 <OAspectItem key={aspect.id}
+                             skill={skill}
+                             subcriteria={subcriteria}
                              aspect={aspect}
                              rootStore={this.props.rootStore}
                 />
