@@ -1,4 +1,5 @@
 import { AppWindow } from '../../interfaces/AppWindow';
+import { SkillItemData } from '../stores/ManageCriteriaStore';
 
 export class ControlsUtil {
   window: AppWindow;
@@ -29,6 +30,14 @@ export class ControlsUtil {
 
   loadFromJSON(): Promise<string> {
     return this.window.api.controls.loadFromJSON();
+  }
+
+  loadFromXLSX(): Promise<SkillItemData[]> {
+    return this.window.api.controls.loadFromXLSX();
+  }
+
+  saveToXLSX(content: any, fileName: string): Promise<void> {
+    return this.window.api.controls.saveToXLSX(content, fileName);
   }
 }
 

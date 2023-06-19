@@ -2,6 +2,7 @@ import { QCallbackMessage } from './QCallbackMessage';
 import { QOperation } from './QOperation';
 import QRequest from '../classes/QRequest';
 import { Channels } from '../main/interfaces/Channels';
+import { SkillItemData } from '../renderer/stores/ManageCriteriaStore';
 
 export interface AppWindow extends Window {
   api: {
@@ -12,6 +13,8 @@ export interface AppWindow extends Window {
       isMaximized: () => boolean;
       saveToJSON: (content: string, fileName: string) => Promise<void>;
       loadFromJSON: () => Promise<string>;
+      saveToXLSX: (content: string, fileName: string) => Promise<void>;
+      loadFromXLSX: () => Promise<SkillItemData[]>;
     }
     ipcRenderer: {
       send: (channel: Channels, args: unknown[]) => void;

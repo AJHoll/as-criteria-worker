@@ -430,7 +430,9 @@ export default class ManageCriteriaStore implements Store {
     }
   }
 
+  // eslint-disable-next-line class-methods-use-this
   async loadFromXLSX(): Promise<void> {
+    this.skills = await controlsUtil.loadFromXLSX();
   }
 
   generateMarkList() {

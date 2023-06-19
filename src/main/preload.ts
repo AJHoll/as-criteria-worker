@@ -1,6 +1,9 @@
 import Electron, { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
 import { Channels } from './interfaces/Channels';
 import { promises as fs } from 'fs';
+import ExcelJS from 'exceljs';
+import { AspectItemData, SkillItemData, SubcriteriaItemData } from '../renderer/stores/ManageCriteriaStore';
+import { v4 as uuid } from 'uuid';
 
 const { BrowserWindow, dialog } = require('@electron/remote');
 
@@ -38,6 +41,89 @@ contextBridge.exposeInMainWorld('api', {
         return fs.readFile(data.filePaths[0], { encoding: 'utf-8' });
       }
       return '';
+    },
+
+    async saveToXLSX(_content: any, _fileName: string): Promise<void> {
+    },
+    async loadFromXLSX(): Promise<SkillItemData[]> {
+      const data: SkillItemData[] = [];
+      const fileData = await dialog.showOpenDialog({ filters: [{ name: 'JSON', extensions: ['xlsx'] }] });
+      if (!fileData.canceled) {
+        const workbook = new ExcelJS.Workbook();
+        await workbook.xlsx.readFile(fileData.filePaths[0]);
+        const sheet = workbook.getWorksheet(1);
+        sheet?.getRows(4, 8)?.forEach((row) => {
+          if (row.hasValues) {
+            data.push({
+              id: uuid(),
+              key: row.getCell('C').text,
+              caption: row.getCell('E').text,
+              mark: row.getCell('F').text,
+              subcriterias: [],
+            });
+          }
+        });
+        data.forEach((skill) => {
+          sheet.eachRow((row, rowNumber) => {
+            if (row.hasValues) {
+              if (row.getCell('A').text.indexOf(skill.key) === 0) {
+                const newSubcriteria: SubcriteriaItemData = {
+                  id: uuid(),
+                  order: row.getCell('A').text.replaceAll(skill.key, ''),
+                  caption: row.getCell('B').text,
+                  aspects: [],
+                };
+                let aspectsMaxRowNum = rowNumber + 1;
+                while (sheet.getRow(aspectsMaxRowNum).getCell('A').text.length === 0 && aspectsMaxRowNum < sheet.rowCount) {
+                  aspectsMaxRowNum++;
+                }
+                sheet.getRows(rowNumber + 1, aspectsMaxRowNum - (rowNumber + 1))?.forEach((aspectRow) => {
+                  if (aspectRow.hasValues) {
+                    if (['B', 'D', 'J'].indexOf(aspectRow.getCell('C').text) !== -1) {
+                      const newAspect: AspectItemData = {
+                        id: uuid(),
+                        type: aspectRow.getCell('C').text,
+                        caption: aspectRow.getCell('E').text,
+                        description: aspectRow.getCell('G').text,
+                        maxMark: aspectRow.getCell('J').text,
+                        extraAspect: [],
+                        judgeScore: [],
+                      };
+                      let extraMaxRowNum = aspectRow.number + 1;
+                      while (sheet.getRow(extraMaxRowNum).getCell('E').text.length === 0 && extraMaxRowNum < sheet.rowCount) {
+                        extraMaxRowNum++;
+                      }
+                      sheet.getRows(aspectRow.number + 1, extraMaxRowNum - aspectRow.number)?.forEach((extraRow) => {
+                        if (extraRow.hasValues) {
+                          if (newAspect.type === 'D' && extraRow.getCell('G').text.length > 0 && extraRow.getCell('J').text.length > 0) {
+                            newAspect.extraAspect.push({
+                              id: uuid(),
+                              description: extraRow.getCell('G').text,
+                              mark: extraRow.getCell('J').text,
+                              rate: '',
+                            });
+                          } else if (newAspect.type === 'J'
+                            && extraRow.getCell('G').text.length > 0
+                            && ['0', '1', '2', '3'].indexOf(extraRow.getCell('F').text) !== -1) {
+                            newAspect.judgeScore.push({
+                              id: uuid(),
+                              description: extraRow.getCell('G').text,
+                              score: extraRow.getCell('F').text,
+                            });
+                          }
+                        }
+                      });
+                      newSubcriteria.aspects.push(newAspect);
+                    }
+                  }
+                });
+                skill.subcriterias.push(newSubcriteria);
+              }
+            }
+          });
+        });
+      }
+      return data;
     },
   },
   ipcRenderer: {
