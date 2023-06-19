@@ -49,6 +49,54 @@ contextBridge.exposeInMainWorld('api', {
         const workbook = new ExcelJS.Workbook();
         const worksheet = workbook.addWorksheet('CIS Marking Scheme Import', { state: 'visible' });
         worksheet.addRow([null, null, null, null, 'Skill name']);
+        worksheet.addRow([null, null, null, null, 'Наименование компетенции']);
+        worksheet.addRow([null, null, null, null, 'Criteria,', 'Mark']);
+        content.forEach((skill) => {
+          worksheet.addRow([null, null, skill.key, null, skill.caption, +skill.mark]);
+        });
+        worksheet.addRows([null, null, null, null, null]);
+        content.forEach((skill) => {
+          worksheet.addRow(['SubCriteriaID',
+            'Sub Criteria\n\nName or Description',
+            'Aspect\nType\nB = Бинарный\nD = Дискретный\nJ = Судейский',
+            'Z-связь',
+            'Aspect - Description',
+            'Judg Score',
+            'Extra Aspect Description (Obj or Subj)\nOR\nJudgement Score Description (Judg only)',
+            'Requirement\nor Nominal\nSize (Obj Only)',
+            'WSSS Section',
+            'Max\nMark',
+            `Criterion\n${skill.key}`,
+            'Total\nMark',
+            +skill.mark,
+            'КН']);
+          skill.subcriterias.forEach((subcriteria) => {
+            worksheet.addRow([`${skill.key}${subcriteria.order}`, subcriteria.caption]);
+            subcriteria.aspects.forEach((aspect) => {
+              const aspectData = [null, null, aspect.type, null, aspect.caption,
+                null, aspect.description, null, aspect.sectionKey, +aspect.maxMark,
+                null, null, null];
+              if (aspect.type === 'B') {
+                aspectData.push(aspect.boolRate === undefined ? null : +aspect.boolRate);
+              }
+              if (aspect.type === 'J') {
+                aspectData.push(aspect.judgeRates?.filter((rate) => !!rate).join(',') ?? null);
+              }
+              worksheet.addRow(aspectData);
+              if (aspect.type === 'D') {
+                aspect.extraAspect.forEach((extra) => {
+                  worksheet.addRow([null, null, null, null, null, null,
+                    extra.description, null, null, +extra.mark,
+                    null, null, null, extra.rate === undefined ? null : +extra.rate]);
+                });
+              } else if (aspect.type === 'J') {
+                aspect.judgeScore.forEach((score) => {
+                  worksheet.addRow([null, null, null, null, null, +score.score, score.description]);
+                });
+              }
+            });
+          });
+        });
         await workbook.xlsx.writeFile(fileData.filePath);
       }
     },
