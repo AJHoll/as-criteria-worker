@@ -30,13 +30,15 @@ export interface AspectItemData {
   maxMark: string;
   extraAspect: ExtraAspectItemData[];
   judgeScore: JudgeScoreItemData[];
-  judgeRate?: string[];
+  boolRate?: string;
+  judgeRates?: string[];
 }
 
 export interface ExtraAspectItemData {
   id: string;
   description: string;
   mark: string;
+  rate?: string;
 }
 
 export interface JudgeScoreItemData {

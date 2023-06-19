@@ -48,7 +48,7 @@ export default class ManageRateStore implements Store {
       if (subcriteria !== undefined) {
         const aspect = subcriteria.aspects.find((aspect) => aspect.id === aspectId);
         if (aspect !== undefined) {
-          aspect.maxMark = value;
+          aspect.boolRate = value;
         }
       }
     }
@@ -69,7 +69,7 @@ export default class ManageRateStore implements Store {
         if (aspect !== undefined) {
           const extra = aspect.extraAspect.find((extraItem) => extraItem.id === descretteAspectExtraId);
           if (extra !== undefined) {
-            extra.mark = value;
+            extra.rate = value;
           }
         }
       }
@@ -93,10 +93,10 @@ export default class ManageRateStore implements Store {
           const extra = aspect.judgeScore.find((extraItem) => extraItem.id === judgeAspectExtraId);
           if (extra !== undefined) {
             if (checked) {
-              if (aspect.judgeRate === undefined) {
-                aspect.judgeRate = [];
+              if (aspect.judgeRates === undefined) {
+                aspect.judgeRates = [];
               }
-              aspect.judgeRate[expertIndex] = extra.score;
+              aspect.judgeRates[expertIndex] = extra.score;
             }
           }
         }

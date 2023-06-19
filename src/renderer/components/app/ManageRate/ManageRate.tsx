@@ -29,7 +29,7 @@ export class ManageRate extends React.Component<ManageRateProps> {
               <>
                 <div className="app_aspect_item__extra_item-description">{extra.description}</div>
                 <DevsInput className="app_aspect_item__extra_item-mark"
-                           value={extra.mark}
+                           value={extra.rate}
                            onChange={(event) => this.manageRateStore.setDescretteAspectExtraMark(skill.id, subcriteria.id, aspect.id, extra.id, event.target.value)}
                 />
               </>
@@ -50,7 +50,7 @@ export class ManageRate extends React.Component<ManageRateProps> {
                                    key={`${extra.id}-${index}`}
                                    label={extra.score}
                                    labelSide="left"
-                                   value={(aspect.judgeRate ?? [])[index] === extra.score}
+                                   value={(aspect.judgeRates ?? [])[index] === extra.score}
                                    onChange={(event) => {
                                      this.manageRateStore.setJudgeAspectExtraScore(skill.id, subcriteria.id, aspect.id, extra.id, index, event.target.checked);
                                    }}
@@ -124,7 +124,7 @@ export class ManageRate extends React.Component<ManageRateProps> {
                                   aspect.type === 'B'
                                     ? (
                                       <DevsInput className="app_aspect_item__mark"
-                                                 value={aspect.maxMark}
+                                                 value={aspect.boolRate}
                                                  onChange={(event) => this.manageRateStore.setAspectItemMark(skill.id, subcriteria.id, aspect.id, event.target.value)}
                                       />
                                     )
