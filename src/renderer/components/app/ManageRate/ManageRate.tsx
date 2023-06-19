@@ -45,32 +45,54 @@ export class ManageRate extends React.Component<ManageRateProps> {
         );
       }
       case 'J': {
-        return [1, 2, 3, 4, 5].map((index) => (
-          <div className="app_aspect_item__judge_score"
-               key={`${aspect}-judge-score-${index}`}
-          >
-            <span className="app_aspect_item__judge_score-index">
-              {index}
-            </span>
-            {
-              aspect.judgeScore.map((extra) => (
-                <div className="app_aspect_item__judge_score_item"
-                     key={`${aspect.id}-${extra.id}-${index}`}
+        return (
+          <div className="app_aspect_item_judge_content">
+            <div className="app_aspect_item_judge_content__describe">
+              {aspect.judgeScore.map((extra) => (
+                <div className="app_aspect_judge_item"
+                     key={`${aspect.id}-${extra.id}-description-judge-score`}
                 >
-                  <DevsRadioButton name={`${aspect.id}-${index}`}
-                                   key={`${aspect.id}-${extra.id}-${index}-radio`}
-                                   label={extra.score}
-                                   labelSide="left"
-                                   value={(aspect.judgeRates ?? [])[index] === extra.score}
-                                   onChange={(event) => {
-                                     this.manageRateStore.setJudgeAspectExtraScore(skill.id, subcriteria.id, aspect.id, extra.id, index, event.target.checked);
-                                   }}
-                  />
+                  <div className="app_aspect_judge_item__score">
+                    {extra.score}
+                  </div>
+                  <div className="app_aspect_judge_item__description">
+                    {extra.description}
+                  </div>
                 </div>
-              ))
-            }
+              ))}
+            </div>
+            <div className="app_aspect_item_judge_content__rank">
+              {
+                [1, 2, 3, 4, 5].map((index) => (
+                  <div className="app_aspect_item__judge_score"
+                       key={`${aspect}-judge-score-${index}`}
+                  >
+                    <span className="app_aspect_item__judge_score-index">
+                      {index}
+                    </span>
+                    {
+                      aspect.judgeScore.map((extra) => (
+                        <div className="app_aspect_item__judge_score_item"
+                             key={`${aspect.id}-${extra.id}-${index}`}
+                        >
+                          <DevsRadioButton name={`${aspect.id}-${index}`}
+                                           key={`${aspect.id}-${extra.id}-${index}-radio`}
+                                           label={extra.score}
+                                           labelSide="left"
+                                           value={(aspect.judgeRates ?? [])[index] === extra.score}
+                                           onChange={(event) => {
+                                             this.manageRateStore.setJudgeAspectExtraScore(skill.id, subcriteria.id, aspect.id, extra.id, index, event.target.checked);
+                                           }}
+                          />
+                        </div>
+                      ))
+                    }
+                  </div>
+                ))
+              }
+            </div>
           </div>
-        ));
+        );
       }
       default: {
         return '';

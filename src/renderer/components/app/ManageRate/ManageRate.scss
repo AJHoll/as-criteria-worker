@@ -102,6 +102,35 @@
                       gap: 5px;
                     }
 
+                    .app_aspect_item_judge_content {
+                      display: flex;
+                      flex-direction: row;
+                      width: 100%;
+
+                      &__describe {
+                        flex: auto;
+                        display: flex;
+                        flex-direction: column;
+
+                        .app_aspect_judge_item {
+                          display: flex;
+                          flex-direction: row;
+                          gap: 10px;
+
+                          &__score {
+                            font-weight: 600;
+                          }
+                        }
+                      }
+
+                      &__rank {
+                        flex: none;
+                        display: flex;
+                        flex-direction: row;
+                        gap: 5px;
+                      }
+                    }
+
                     .app_aspect_item__judge_score {
                       display: flex;
                       flex-direction: column;

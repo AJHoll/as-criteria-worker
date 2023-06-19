@@ -48,6 +48,8 @@ contextBridge.exposeInMainWorld('api', {
       if (!fileData.canceled) {
         const workbook = new ExcelJS.Workbook();
         const worksheet = workbook.addWorksheet('CIS Marking Scheme Import', { state: 'visible' });
+        worksheet.addRow([null, null, null, null, 'Skill name']);
+        await workbook.xlsx.writeFile(fileData.filePath);
       }
     },
 
