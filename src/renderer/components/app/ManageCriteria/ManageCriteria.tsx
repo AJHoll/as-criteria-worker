@@ -25,6 +25,12 @@ export class ManageCriteria extends React.Component<ManageCriteriaProps> {
                         onClick={() => this.manageCriteriaStore.addSkill()}
             />
             <DevsButton template="filled"
+                        color="help"
+                        title="Загрузить из XLSX"
+                        icon="lni lni-download"
+                        onClick={() => this.manageCriteriaStore.loadFromXLSX()}
+            />
+            <DevsButton template="filled"
                         color="secondary"
                         title="Сохранить в JSON"
                         icon="lni lni-upload"
@@ -41,6 +47,14 @@ export class ManageCriteria extends React.Component<ManageCriteriaProps> {
                         title="Сформировать лист проверки"
                         icon="lni lni-check-box"
                         onClick={() => this.manageCriteriaStore.generateMarkList()}
+            />
+            <DevsButton template="filled"
+                        color="danger"
+                        title="Очистить все"
+                        icon="lni lni-check-box"
+                        onClick={() => {
+                          this.manageCriteriaStore.skills = [];
+                        }}
             />
           </div>
           <div className="app_skills_container">

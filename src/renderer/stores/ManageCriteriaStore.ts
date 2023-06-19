@@ -430,6 +430,9 @@ export default class ManageCriteriaStore implements Store {
     }
   }
 
+  async loadFromXLSX(): Promise<void> {
+  }
+
   generateMarkList() {
     this.rootStore.manageRateStore.rates = JSON.parse(JSON.stringify(this.skills));
     this.skills = [];

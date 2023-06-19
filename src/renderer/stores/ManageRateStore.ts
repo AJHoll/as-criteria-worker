@@ -7,6 +7,7 @@ import {
   SkillItemData,
   SubcriteriaItemData,
 } from './ManageCriteriaStore';
+import controlsUtil from '../utils/ControlsUtil';
 
 export default class ManageRateStore implements Store {
   private readonly _id: string;
@@ -101,6 +102,22 @@ export default class ManageRateStore implements Store {
           }
         }
       }
+    }
+  }
+
+  async saveToJSON() {
+    await controlsUtil.saveToJSON(JSON.stringify(this.rates), 'rates-export.json');
+    this.rootStore.toastRef?.current?.success('Сохранение прошло успешно');
+  }
+
+  async loadFromJSON() {
+    const data = await controlsUtil.loadFromJSON();
+    if ((data ?? '').length > 0) {
+      this.rates = JSON.parse(data);
+      this.rootStore.toastRef?.current?.info(
+        'Загрузка прошла успешно',
+        'Пожалуйста, перезагрузите страницу для применения изменений',
+      );
     }
   }
 }

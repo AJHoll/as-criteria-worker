@@ -76,21 +76,28 @@ export class ManageRate extends React.Component<ManageRateProps> {
                       color="secondary"
                       title="Сохранить в JSON"
                       icon="lni lni-upload"
-                      onClick={() => {
-                      }}
+                      onClick={() => this.manageRateStore.saveToJSON()}
           />
           <DevsButton template="filled"
                       color="info"
                       title="Загрузить из JSON"
                       icon="lni lni-download"
-                      onClick={() => {
-                      }}
+                      onClick={() => this.manageRateStore.loadFromJSON()}
           />
           <DevsButton template="filled"
+                      disabled
                       color="success"
                       title="Сформировать XLSX"
                       icon="lni lni-check-box"
                       onClick={() => {
+                      }}
+          />
+          <DevsButton template="filled"
+                      color="danger"
+                      title="Очистить все"
+                      icon="lni lni-check-box"
+                      onClick={() => {
+                        this.manageRateStore.rates = [];
                       }}
           />
         </div>
