@@ -43,8 +43,12 @@ contextBridge.exposeInMainWorld('api', {
       return '';
     },
 
-    async saveToXLSX(_content: any, _fileName: string): Promise<void> {
-      console.log('saved');
+    async saveToXLSX(content: SkillItemData[], fileName: string): Promise<void> {
+      const fileData = await dialog.showSaveDialog({ defaultPath: fileName });
+      if (!fileData.canceled) {
+        const workbook = new ExcelJS.Workbook();
+        const worksheet = workbook.addWorksheet('CIS Marking Scheme Import', { state: 'visible' });
+      }
     },
 
     async loadFromXLSX(): Promise<SkillItemData[]> {
@@ -94,6 +98,9 @@ contextBridge.exposeInMainWorld('api', {
                       let extraMaxRowNum = aspectRow.number + 1;
                       while (sheet.getRow(extraMaxRowNum).getCell('E').text.length === 0 && extraMaxRowNum < sheet.rowCount) {
                         extraMaxRowNum++;
+                      }
+                      if (extraMaxRowNum !== sheet.rowCount) {
+                        extraMaxRowNum--;
                       }
                       sheet.getRows(aspectRow.number + 1, extraMaxRowNum - aspectRow.number)?.forEach((extraRow) => {
                         if (extraRow.hasValues) {

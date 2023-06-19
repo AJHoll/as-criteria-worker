@@ -36,7 +36,7 @@ export class ControlsUtil {
     return this.window.api.controls.loadFromXLSX();
   }
 
-  saveToXLSX(content: any, fileName: string): Promise<void> {
+  saveToXLSX(content: SkillItemData[], fileName: string): Promise<void> {
     return this.window.api.controls.saveToXLSX(content, fileName);
   }
 }

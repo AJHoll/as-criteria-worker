@@ -141,4 +141,9 @@ export default class ManageRateStore implements Store {
       );
     }
   }
+
+  async saveToXLSX() {
+    await controlsUtil.saveToXLSX(this.rates, 'export-rates.xslsx');
+    this.rootStore.toastRef?.current?.success('Сохранение прошло успешно');
+  }
 }

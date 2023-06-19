@@ -13,7 +13,7 @@ export interface AppWindow extends Window {
       isMaximized: () => boolean;
       saveToJSON: (content: string, fileName: string) => Promise<void>;
       loadFromJSON: () => Promise<string>;
-      saveToXLSX: (content: string, fileName: string) => Promise<void>;
+      saveToXLSX: (content: SkillItemData[], fileName: string) => Promise<void>;
       loadFromXLSX: () => Promise<SkillItemData[]>;
     }
     ipcRenderer: {

@@ -96,12 +96,10 @@ export class ManageRate extends React.Component<ManageRateProps> {
                       onClick={() => this.manageRateStore.loadFromJSON()}
           />
           <DevsButton template="filled"
-                      disabled
                       color="success"
                       title="Сформировать XLSX"
                       icon="lni lni-check-box"
-                      onClick={() => {
-                      }}
+                      onClick={() => this.manageRateStore.saveToXLSX()}
           />
           <DevsButton template="filled"
                       color="danger"
