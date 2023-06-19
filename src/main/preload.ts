@@ -95,7 +95,9 @@ contextBridge.exposeInMainWorld('api', {
                       }
                       sheet.getRows(aspectRow.number + 1, extraMaxRowNum - aspectRow.number)?.forEach((extraRow) => {
                         if (extraRow.hasValues) {
-                          if (newAspect.type === 'D' && extraRow.getCell('G').text.length > 0 && extraRow.getCell('J').text.length > 0) {
+                          if (newAspect.type === 'D'
+                            && extraRow.getCell('G').text.length > 0
+                            && (extraRow.getCell('J').text.match('\\d+') ?? []).length > 0) {
                             newAspect.extraAspect.push({
                               id: uuid(),
                               description: extraRow.getCell('G').text,
