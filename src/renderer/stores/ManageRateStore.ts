@@ -105,6 +105,27 @@ export default class ManageRateStore implements Store {
     }
   }
 
+  clearAll() {
+    this.rates.forEach((skill) => {
+      skill.mark = '';
+      skill.subcriterias.forEach((subcriteria) => {
+        subcriteria.aspects.forEach((aspect) => {
+          aspect.maxMark = '';
+          aspect.judgeRates = [];
+          aspect.boolRate = '';
+          aspect.extraAspect.forEach((extra) => {
+            extra.rate = '';
+            extra.mark = '';
+          });
+        });
+      });
+    });
+    this.rootStore.toastRef?.current?.info(
+      'Очистка прошла успешно',
+      'Пожалуйста, перезагрузите страницу для применения изменений',
+    );
+  }
+
   async saveToJSON() {
     await controlsUtil.saveToJSON(JSON.stringify(this.rates), 'rates-export.json');
     this.rootStore.toastRef?.current?.success('Сохранение прошло успешно');

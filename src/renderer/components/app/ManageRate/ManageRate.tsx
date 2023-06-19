@@ -24,30 +24,41 @@ export class ManageRate extends React.Component<ManageRateProps> {
     switch (aspect.type) {
       case 'D': {
         return (
-          <div className="app_aspect_item__extra_item">
+          <div className="app_aspect_item__extra_item"
+               key={`${aspect.id}-extra_item`}
+          >
             {aspect.extraAspect.map((extra) => (
-              <>
-                <div className="app_aspect_item__extra_item-description">{extra.description}</div>
+              <div key={`${aspect.id}-${extra.id}`}>
+                <div key={`${extra.id}-description`}
+                     className="app_aspect_item__extra_item-description"
+                >
+                  {extra.description}
+                </div>
                 <DevsInput className="app_aspect_item__extra_item-mark"
+                           key={`${extra.id}-mark`}
                            value={extra.rate}
                            onChange={(event) => this.manageRateStore.setDescretteAspectExtraMark(skill.id, subcriteria.id, aspect.id, extra.id, event.target.value)}
                 />
-              </>
+              </div>
             ))}
           </div>
         );
       }
       case 'J': {
         return [1, 2, 3, 4, 5].map((index) => (
-          <div className="app_aspect_item__judge_score">
+          <div className="app_aspect_item__judge_score"
+               key={`${aspect}-judge-score-${index}`}
+          >
             <span className="app_aspect_item__judge_score-index">
               {index}
             </span>
             {
               aspect.judgeScore.map((extra) => (
-                <div className="app_aspect_item__judge_score_item">
+                <div className="app_aspect_item__judge_score_item"
+                     key={`${aspect.id}-${extra.id}-${index}`}
+                >
                   <DevsRadioButton name={`${aspect.id}-${index}`}
-                                   key={`${extra.id}-${index}`}
+                                   key={`${aspect.id}-${extra.id}-${index}-radio`}
                                    label={extra.score}
                                    labelSide="left"
                                    value={(aspect.judgeRates ?? [])[index] === extra.score}
@@ -96,14 +107,14 @@ export class ManageRate extends React.Component<ManageRateProps> {
                       color="danger"
                       title="Очистить все"
                       icon="lni lni-check-box"
-                      onClick={() => {
-                        this.manageRateStore.rates = [];
-                      }}
+                      onClick={() => this.manageRateStore.clearAll()}
           />
         </div>
         <div className="app_manage_rate__content">
           {this.manageRateStore.rates.map((skill) => (
-            <DevsPanel className="app_skill_item">
+            <DevsPanel className="app_skill_item"
+                       key={skill.id}
+            >
               <div className="app_skill_item__text">
                 <div className="app_skill_item__text-key">{skill.key}</div>
               </div>
@@ -111,7 +122,9 @@ export class ManageRate extends React.Component<ManageRateProps> {
                 <div className="app_skill_item__content-caption">{skill.caption}</div>
                 <div className="app_skill_item__content-subcriterias">
                   {skill.subcriterias.map((subcriteria) => (
-                    <DevsPanel className="app_subcriteria_item">
+                    <DevsPanel className="app_subcriteria_item"
+                               key={subcriteria.id}
+                    >
                       <div className="app_subcriteria_item__text">
                         {skill.key + subcriteria.order}
                       </div>
@@ -119,7 +132,9 @@ export class ManageRate extends React.Component<ManageRateProps> {
                         <div className="app_subcriteria_item__content-caption">{subcriteria.caption}</div>
                         <div className="app_subcriteria_item__content-aspects">
                           {subcriteria.aspects.map((aspect) => (
-                            <DevsPanel className="app_aspect_item">
+                            <DevsPanel className="app_aspect_item"
+                                       key={aspect.id}
+                            >
                               <div className="app_aspect_item__labels">
                                 <div className="app_aspect_item__labels-caption">
                                   {aspect.caption}
@@ -131,6 +146,7 @@ export class ManageRate extends React.Component<ManageRateProps> {
                                   aspect.type === 'B'
                                     ? (
                                       <DevsInput className="app_aspect_item__mark"
+                                                 key={`${aspect.id}-mark`}
                                                  value={aspect.boolRate}
                                                  onChange={(event) => this.manageRateStore.setAspectItemMark(skill.id, subcriteria.id, aspect.id, event.target.value)}
                                       />
@@ -139,7 +155,9 @@ export class ManageRate extends React.Component<ManageRateProps> {
                                 }
                                 {aspect.type !== 'B'
                                   ? (
-                                    <div className="app_aspect_item__extra">
+                                    <div className="app_aspect_item__extra"
+                                         key={`${aspect.id}-extra`}
+                                    >
                                       {this.getAspectExtra(skill, subcriteria, aspect)}
                                     </div>
                                   )

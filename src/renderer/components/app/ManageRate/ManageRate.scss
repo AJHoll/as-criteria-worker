@@ -44,6 +44,7 @@
           flex-direction: column;
           flex: auto;
           width: 100%;
+          gap: 15px;
 
           .app_subcriteria_item {
             &__text {
@@ -93,6 +94,13 @@
                     gap: 15px;
                     justify-content: start;
                     width: 100%;
+                    padding-top: 5px;
+
+                    &_item {
+                      display: flex;
+                      flex-direction: column;
+                      gap: 5px;
+                    }
 
                     .app_aspect_item__judge_score {
                       display: flex;

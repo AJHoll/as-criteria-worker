@@ -44,7 +44,9 @@ contextBridge.exposeInMainWorld('api', {
     },
 
     async saveToXLSX(_content: any, _fileName: string): Promise<void> {
+      console.log('saved');
     },
+
     async loadFromXLSX(): Promise<SkillItemData[]> {
       const data: SkillItemData[] = [];
       const fileData = await dialog.showOpenDialog({ filters: [{ name: 'JSON', extensions: ['xlsx'] }] });
@@ -80,7 +82,7 @@ contextBridge.exposeInMainWorld('api', {
                 sheet.getRows(rowNumber + 1, aspectsMaxRowNum - (rowNumber + 1))?.forEach((aspectRow) => {
                   if (aspectRow.hasValues) {
                     if (['B', 'D', 'J'].indexOf(aspectRow.getCell('C').text) !== -1) {
-                      const newAspect: AspectItemData = {
+                      const newAspect: AspectItemData | any = {
                         id: uuid(),
                         type: aspectRow.getCell('C').text,
                         caption: aspectRow.getCell('E').text,
