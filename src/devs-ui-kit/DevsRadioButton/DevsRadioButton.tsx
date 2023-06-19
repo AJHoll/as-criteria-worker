@@ -34,7 +34,7 @@ export default class DevsRadioButton extends React.Component<RadioButtonProps, R
         <input className={`devs_radiobutton__item ${disabled ? 'devs_radiobutton__item-disabled' : ''}`}
                type="radio"
                name={name}
-               checked={checked}
+               defaultChecked={checked}
                disabled={disabled}
                onChange={(event) => {
                  this.setState({ checked: !checked });

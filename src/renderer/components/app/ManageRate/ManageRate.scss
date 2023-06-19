@@ -1,9 +1,117 @@
 .app_manage_rate {
   &__toolbar {
-
+    padding: 10px 0;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
   }
 
   &__content {
+    display: flex;
+    flex-direction: column;
+    flex: auto;
+    width: 100%;
+    gap: 20px;
 
+    .app_skill_item {
+      display: flex;
+      flex-direction: row;
+      gap: 15px;
+      align-items: start;
+      width: 100%;
+
+      &__text {
+        &-key {
+          font-size: 20px;
+          font-weight: 600;
+        }
+      }
+
+      &__content {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+
+        &-caption {
+          padding-top: 3px;
+          font-weight: 600;
+          justify-content: center;
+        }
+
+        &-subcriterias {
+          display: flex;
+          flex-direction: column;
+          flex: auto;
+          width: 100%;
+
+          .app_subcriteria_item {
+            &__text {
+              font-weight: 600;
+              justify-content: center;
+            }
+
+            &__content {
+              &-caption {
+                font-weight: 600;
+              }
+
+              &-aspects {
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+
+                .app_aspect_item {
+                  display: flex;
+                  flex-direction: row;
+                  gap: 5px;
+
+                  &__labels {
+                    display: flex;
+                    flex-direction: column;
+                    flex: auto;
+                    gap: 5px;
+
+                    &-caption {
+                      font-weight: 600;
+                    }
+
+                    &-description {
+                      font-size: 15px;
+                      font-weight: 300;
+                    }
+                  }
+
+                  &__mark {
+                    width: 100px;
+                    align-self: start;
+                  }
+
+                  &__extra {
+                    display: flex;
+                    flex-direction: row;
+                    gap: 15px;
+                    justify-content: start;
+                    width: 100%;
+
+                    .app_aspect_item__judge_score {
+                      display: flex;
+                      flex-direction: column;
+                      gap: 3px;
+
+                      &-index {
+                        font-size: 15px;
+                        font-weight: 600;
+                        align-self: center;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }
